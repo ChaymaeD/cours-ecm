@@ -9,7 +9,7 @@ $(function(){
                 source: data,
                 delay: 100
             }});
-        })
+            })
     });
 
     $('button[data-role="addIngredient"]').click(function() {

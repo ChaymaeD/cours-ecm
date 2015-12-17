@@ -5,6 +5,7 @@
 
 <%@ attribute name="recipe" required="true" rtexprvalue="true" type="fr.cmm.domain.Recipe"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="mataglib" uri="/WEB-INF/tld/util.tld" %>
 
 <div class="row">
     <div class="col-xs-12 col-sm-4">
@@ -28,6 +29,6 @@
                 </c:forEach>
             </ul>
         </c:if>
-        <p>${fn:escapeXml(recipe.text)}</p>
+        <p>${mataglib:text(recipe.text)}</p>
     </div>
 </div>
