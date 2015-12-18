@@ -41,6 +41,8 @@ dependencies {
 
     compile 'log4j:log4j:1.2.17'
 
+    compile 'com.fasterxml:jackson-xml-databind:0.6.2'
+
     compile 'org.springframework.security:spring-security-core:4.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-config:4.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-web:4.0.3.RELEASE'

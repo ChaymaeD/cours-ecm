@@ -26,6 +26,7 @@ public class RecipeService {
 
         return recipeCollection
                 .find(queryHelper.mongoQuery, queryHelper.params)
+                .sort("{date: -1}")
                 .skip(query.skip())
                 .limit(query.getSize())
                 .as(Recipe.class);
@@ -61,6 +62,14 @@ public class RecipeService {
 
     public List<String> findAllTags() {
         return recipeCollection.distinct("tags").as(String.class);
+    }
+
+    public Iterator<Recipe> findPagine() {
+        return recipeCollection
+                .find()
+                .sort("{date: -1}")
+                .as(Recipe.class);
+
     }
 
     private class QueryHelper {
