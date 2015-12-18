@@ -2,12 +2,14 @@ package fr.cmm.service;
 
 import fr.cmm.domain.Recipe;
 import fr.cmm.helper.PageQuery;
+import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.internal.matchers.Null;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -58,6 +60,12 @@ public class RecipeServiceTest {
     }
 
     @Test
+    public void findByIdWithInvalidId(){
+
+        Assert.assertNull(recipeService.findById("badid"));
+    }
+
+    @Test
     public void findByQuery() {
         recipeService.save(new Recipe());
         recipeService.save(new Recipe());
@@ -103,4 +111,6 @@ public class RecipeServiceTest {
 
         Assert.assertEquals(asList("tag1", "tag2", "tag3"), recipeService.findAllTags());
     }
+
+
 }
