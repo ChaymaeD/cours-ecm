@@ -113,4 +113,29 @@ public class RecipeServiceTest {
     }
 
 
+    @Test
+    public void countByQuery() {
+        recipeService.save(new Recipe());
+        recipeService.save(new Recipe());
+        recipeService.save(new Recipe());
+        recipeService.save(new Recipe());
+        recipeService.save(new Recipe());
+
+        Assert.assertEquals(5, recipeService.countByQuery(new PageQuery()));
+    }
+
+
+    @Test
+    public void countByQueryWithTag() {
+        recipeService.save(new Recipe().withTags("tag1"));
+        recipeService.save(new Recipe().withTags("tag1"));
+        recipeService.save(new Recipe().withTags("tag2"));
+        recipeService.save(new Recipe().withTags("tag2"));
+        recipeService.save(new Recipe().withTags("tag3"));
+
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setTag("tag1");
+
+        Assert.assertEquals(2, recipeService.countByQuery(pageQuery));
+    }
 }

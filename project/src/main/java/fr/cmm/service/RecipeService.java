@@ -21,23 +21,21 @@ public class RecipeService {
     private MongoCollection recipeCollection;
 
     public Iterable<Recipe> findByQuery(PageQuery query) {
-        String mongoQuery = "{}";
-        String[] params = {};
-
-        if (query.getTag() != null && !"".equals(query.getTag())) {
-            mongoQuery = "{tags: #}";
-            params = new String[] {query.getTag()};
-        }
+        QueryHelper queryHelper = new QueryHelper();
+        queryHelper.compute(query);
 
         return recipeCollection
-                .find(mongoQuery, (Object[]) params)
+                .find(queryHelper.mongoQuery, queryHelper.params)
                 .skip(query.skip())
                 .limit(query.getSize())
                 .as(Recipe.class);
     }
 
     public long countByQuery(PageQuery query) {
-        return recipeCollection.count();
+        QueryHelper queryHelper = new QueryHelper();
+        queryHelper.compute(query);
+
+        return recipeCollection.count(queryHelper.mongoQuery, queryHelper.params);
     }
 
     public Iterator<Recipe> findRandom(int count) {
@@ -63,5 +61,17 @@ public class RecipeService {
 
     public List<String> findAllTags() {
         return recipeCollection.distinct("tags").as(String.class);
+    }
+
+    private class QueryHelper {
+        String mongoQuery = "{}";
+        Object[] params = {};
+
+        public void compute(PageQuery query) {
+            if (query.getTag() != null && !"".equals(query.getTag())) {
+                mongoQuery = "{tags: #}";
+                params = new String[] {query.getTag()};
+            }
+        }
     }
 }
